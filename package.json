@@ -1,0 +1,32 @@
+{
+  "name": "lafise-workshop-js",
+  "version": "1.0.0",
+  "description": "workshop music app javascript",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "babel": "babel --presets es2015 js/index.js -o build/main.bundle.js",
+    "start": "npm run babel && http-server -p 9000",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlbertoChamorro/LAFISE-Workshop-JS.git"
+  },
+  "author": "@AlbertoChamorro",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AlbertoChamorro/LAFISE-Workshop-JS/issues"
+  },
+  "homepage": "https://github.com/AlbertoChamorro/LAFISE-Workshop-JS#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "http-server": "^0.11.1"
+  }
+}
