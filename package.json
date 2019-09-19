@@ -7,8 +7,8 @@
     "doc": "docs"
   },
   "scripts": {
-    "webpack": "npx webpack --config webpack.config.js",
-    "start:dev": "webpack-dev-server --watch --hot"
+    "build": "npx webpack --config webpack.config.js --mode production",
+    "start:dev": "webpack-dev-server --watch --hot --mode development"
   },
   "repository": {
     "type": "git",
@@ -21,13 +21,19 @@
   },
   "homepage": "https://github.com/AlbertoChamorro/LAFISE-Workshop-JS#readme",
   "devDependencies": {
+    "@babel/core": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
     "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.2.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.8.0",
     "webpack": "^4.40.2",
     "webpack-cli": "^3.3.9",
     "webpack-dev-server": "^3.8.1"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.6.0"
   }
 }
