@@ -7,9 +7,8 @@
     "doc": "docs"
   },
   "scripts": {
-    "babel": "babel --presets es2015 js/index.js -o build/main.bundle.js",
-    "start": "npm run babel && http-server -p 9000",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "webpack": "npx webpack --config webpack.config.js",
+    "start:dev": "webpack-dev-server --watch --hot"
   },
   "repository": {
     "type": "git",
@@ -27,6 +26,8 @@
     "babel-polyfill": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
-    "http-server": "^0.11.1"
+    "webpack": "^4.40.2",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.8.1"
   }
 }
