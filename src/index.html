@@ -4,17 +4,104 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>MusicApp</title>
-    <!-- <link rel="stylesheet" type="text/css" href="./styles/main.css"> -->
+    <title>Github portafolio</title>
+    <link rel="stylesheet" type="text/css" href="../dist/main.css">
 </head>
 <body>
+    <!-- Wrapper container -->
+    <div class="container">
 
-    <div class="wrapper">
-        <p class="paragraph">
-            Bienvenidos al taller de Javascript + ES6
-        </p>
+        <div class="wrapper-header row">
+            <h1 class="col-md-12 mt-4 text-center">Portafolios GitHub</h1>
+
+            <!-- Search to users, TODO: Bind event search -->
+            <div class="col-md-10 mt-3 mx-auto">
+                <div class="inner-addon left-addon">
+                    <i class="fa fa-search"></i>
+                    <input class="form-control" type="search" placeholder="Búsca los mejores proyectos aquí..." />
+                </div>
+            </div>
+            <!-- Counts footer descriptions -->
+            <div class="col-md-10 mx-auto mt-1 mb-4">
+                <label class="control-label float-right small">Se encontraron {{count}} portafolios</label>
+            </div>
+        </div>
+
+        <!-- TODO: show users, bind for each -->
+        <div class="row mt-4 mx-auto">
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <img src="./assets/placeholder.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{Username}}</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                            content.</p>
+                        <a href="#" class="btn btn-cs-primary">Show portafolio <i class="fa fa-chevron-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <img src="./assets/placeholder.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{Username}}</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                            content.</p>
+                        <a href="#" class="btn btn-cs-primary">Show portafolio <i class="fa fa-chevron-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <img src="./assets/placeholder.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{Username}}</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                            content.</p>
+                        <a href="#" class="btn btn-cs-primary">Show portafolio <i class="fa fa-chevron-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <img src="./assets/placeholder.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{Username}}</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                            content.</p>
+                        <a href="#" class="btn btn-cs-primary">Show portafolio <i class="fa fa-chevron-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                    <img src="./assets/placeholder.png" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{Username}}</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                            content.</p>
+                        <a href="#" class="btn btn-cs-primary">Show portafolio <i class="fa fa-chevron-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Pagination components -->
+        <div class="row col-md-12 mt-4">
+            <ul class="pagination pagination-centered">
+                <!-- mx-auto -->
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+        </div>
     </div>
-    
+        
     <!-- <script type="text/javascript" src="../dist/main.bundle.js"></script> -->
 </body>
 </html>

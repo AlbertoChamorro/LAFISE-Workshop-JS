@@ -2,13 +2,13 @@
   "name": "lafise-workshop-js",
   "version": "1.0.0",
   "description": "workshop music app javascript",
-  "main": "index.js",
+  "main": "app.js",
   "directories": {
     "doc": "docs"
   },
   "scripts": {
     "build": "npx webpack --config webpack.config.js --mode production",
-    "start:dev": "webpack-dev-server --watch --hot --mode development"
+    "start:dev": "webpack-dev-server --watch --mode development"
   },
   "repository": {
     "type": "git",
@@ -22,10 +22,13 @@
   "homepage": "https://github.com/AlbertoChamorro/LAFISE-Workshop-JS#readme",
   "devDependencies": {
     "@babel/core": "^7.6.0",
+    "@babel/polyfill": "^7.6.0",
     "@babel/preset-env": "^7.6.0",
+    "angular-cli": "^1.0.0-beta.28.3",
     "babel-cli": "^6.26.0",
     "babel-loader": "^8.0.6",
     "css-loader": "^3.2.0",
+    "file-loader": "^4.2.0",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "mini-css-extract-plugin": "^0.8.0",
@@ -34,6 +37,9 @@
     "webpack-dev-server": "^3.8.1"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.6.0"
+    "angular": "^1.7.8",
+    "bootstrap": "^4.3.1",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.4.1"
   }
 }

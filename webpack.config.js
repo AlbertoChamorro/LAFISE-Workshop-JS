@@ -4,7 +4,7 @@ const HtmlWebPackPlugin = require("html-webpack-plugin")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-    entry: ['@babel/polyfill', './src/js/index.js'],
+    entry: ['@babel/polyfill', './src/js/app.js'],
     // mode: "development",
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -13,7 +13,7 @@ module.exports = {
     },
     devServer: {
         historyApiFallback: true,
-        contentBase: path.join(__dirname, 'dist'),
+        contentBase: path.join(__dirname, 'src'),
         writeToDisk: true,
         compress: false,
         port: 9000,
@@ -38,6 +38,18 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: [MiniCssExtractPlugin.loader, "css-loader"]
+            },
+            {
+                test: /\.(png|svg|jpg|gif)$/,
+                use: [
+                    'file-loader'
+                ]
+            },
+            {
+                test: /\.(woff|woff2|eot|ttf|otf)$/,
+                use: [
+                  'file-loader'
+                ]
             }
         ]
     },
