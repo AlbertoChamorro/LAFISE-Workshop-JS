@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="GithubApp" ng-cloack>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,8 @@
     <title>Github portafolio</title>
     <link rel="stylesheet" type="text/css" href="../dist/main.css">
 </head>
-<body>
+<body ng-controller="HomeController">
+
     <!-- Wrapper container -->
     <div class="container">
 
@@ -18,24 +19,70 @@
             <div class="col-md-10 mt-3 mx-auto">
                 <div class="inner-addon left-addon">
                     <i class="fa fa-search"></i>
-                    <input class="form-control" type="search" placeholder="Búsca los mejores proyectos aquí..." />
+                    <input class="form-control" type="search" placeholder="Búsca los mejores proyectos aquí..." 
+                        ng-model="search" />
                 </div>
             </div>
             <!-- Counts footer descriptions -->
-            <div class="col-md-10 mx-auto mt-1 mb-4">
+            <div class="col-md-10 mx-auto mt-1 mb-2">
                 <label class="control-label float-right small">Se encontraron {{count}} portafolios</label>
+            </div>
+
+            <!-- Filters -->
+            <div class="col-md-10 mx-auto">
+                <div class="input-group mb-3">
+                    <div class="form-check form-check-inline">
+                        <em><i class="fa fa-filter"></i></em>
+                        <label class="form-check-label ml-1 small">Filtrar:</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="all-checkbox" 
+                            ng-model="selectAllCheckbox"
+                            ng-change="filterUsers()">
+                        <label class="form-check-label small" for="all-checkbox">Todos</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="user-checkbox" 
+                            ng-model="selectUsersCheckbox"
+                            ng-change="filterUsers()">
+                        <label class="form-check-label small" for="user-checkbox">Usuarios</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="org-checkbox" ng-model="selectOrganizationsCheckbox"
+                        ng-change="filterUsers()">
+                        <label class="form-check-label small" for="org-checkbox">Organizaciones</label>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- TODO: show users, bind for each -->
+        <div class="row mt-4 mx-auto" style="visibility: hidden;">
+            <div class="spinner-border mx-auto" role="status">
+                <span class="sr-only text-secondary">Loading...</span>
+            </div>
+        </div>
+        
         <div class="row mt-4 mx-auto">
             <div class="col-md-4">
                 <div class="card" style="width: 18rem;">
                     <img src="./assets/placeholder.png" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">{{Username}}</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                            content.</p>
+                        <h5 class="card-title">Username</h5>
+                        <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                            industry's standard
+                            dummy text ever since the 1500s.</p>
+
+                        <p class="card-text">
+                            <small class="text-muted">
+                                Score
+                                <em><i class="fa fa-star score-start"></i></em>
+                                <em><i class="fa fa-star"></i></em>
+                                <em><i class="fa fa-star"></i></em>
+                                <em><i class="fa fa-star"></i></em>
+                                <em><i class="fa fa-star"></i></em>
+                            </small>
+                        </p>
                         <a href="#" class="btn btn-cs-primary">Show portafolio <i class="fa fa-chevron-right"></i></a>
                     </div>
                 </div>
@@ -44,9 +91,20 @@
                 <div class="card" style="width: 18rem;">
                     <img src="./assets/placeholder.png" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">{{Username}}</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                            content.</p>
+                        <h5 class="card-title">Username</h5>
+                        <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                            industry's standard
+                            dummy text ever since the 1500s.</p>
+                            <p class="card-text">
+                                <small class="text-muted">
+                                    Score
+                                    <em><i class="fa fa-star score-start"></i></em>
+                                    <em><i class="fa fa-star score-start"></i></em>
+                                    <em><i class="fa fa-star score-start"></i></em>
+                                    <em><i class="fa fa-star"></i></em>
+                                    <em><i class="fa fa-star"></i></em>
+                                </small>
+                            </p>
                         <a href="#" class="btn btn-cs-primary">Show portafolio <i class="fa fa-chevron-right"></i></a>
                     </div>
                 </div>
@@ -55,9 +113,20 @@
                 <div class="card" style="width: 18rem;">
                     <img src="./assets/placeholder.png" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">{{Username}}</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                            content.</p>
+                        <h5 class="card-title">Username</h5>
+                        <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                            industry's standard
+                            dummy text ever since the 1500s.</p>
+                            <p class="card-text">
+                                <small class="text-muted">
+                                    Score
+                                    <em><i class="fa fa-star"></i></em>
+                                    <em><i class="fa fa-star"></i></em>
+                                    <em><i class="fa fa-star"></i></em>
+                                    <em><i class="fa fa-star"></i></em>
+                                    <em><i class="fa fa-star"></i></em>
+                                </small>
+                            </p>
                         <a href="#" class="btn btn-cs-primary">Show portafolio <i class="fa fa-chevron-right"></i></a>
                     </div>
                 </div>
@@ -67,9 +136,20 @@
                 <div class="card" style="width: 18rem;">
                     <img src="./assets/placeholder.png" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">{{Username}}</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                            content.</p>
+                        <h5 class="card-title">Username</h5>
+                        <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                            industry's standard
+                            dummy text ever since the 1500s.</p>
+                            <p class="card-text">
+                                <small class="text-muted">
+                                    Score
+                                    <em><i class="fa fa-star score-start"></i></em>
+                                    <em><i class="fa fa-star score-start"></i></em>
+                                    <em><i class="fa fa-star score-start"></i></em>
+                                    <em><i class="fa fa-star score-start"></i></em>
+                                    <em><i class="fa fa-star score-start"></i></em>
+                                </small>
+                            </p>
                         <a href="#" class="btn btn-cs-primary">Show portafolio <i class="fa fa-chevron-right"></i></a>
                     </div>
                 </div>
@@ -79,9 +159,19 @@
                 <div class="card" style="width: 18rem;">
                     <img src="./assets/placeholder.png" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">{{Username}}</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                            content.</p>
+                        <h5 class="card-title">Username</h5>
+                        <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard
+                        dummy text ever since the 1500s.</p>
+                        <p class="card-text">
+                            <small class="text-muted">
+                                Score
+                                <em><i class="fa fa-star score-start"></i></em>
+                                <em><i class="fa fa-star score-start"></i></em>
+                                <em><i class="fa fa-star score-start"></i></em>
+                                <em><i class="fa fa-star score-start"></i></em>
+                                <em><i class="fa fa-star score-start"></i></em>
+                            </small>
+                        </p>
                         <a href="#" class="btn btn-cs-primary">Show portafolio <i class="fa fa-chevron-right"></i></a>
                     </div>
                 </div>
@@ -91,12 +181,14 @@
 
         <!-- Pagination components -->
         <div class="row col-md-12 mt-4">
-            <ul class="pagination pagination-centered">
+            <ul class="pagination pagination-centered pg-blue">
                 <!-- mx-auto -->
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
                 <li class="page-item"><a class="page-link" href="#">1</a></li>
                 <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item active"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                <li class="page-item"><a class="page-link" href="#">5</a></li>
                 <li class="page-item"><a class="page-link" href="#">Next</a></li>
             </ul>
         </div>

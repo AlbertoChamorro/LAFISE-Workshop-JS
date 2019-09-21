@@ -1,7 +1,7 @@
 const path = require('path')
 const webpack = require ("webpack")
 const HtmlWebPackPlugin = require("html-webpack-plugin")
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 
 module.exports = {
     entry: ['@babel/polyfill', './src/js/app.js'],
@@ -13,7 +13,7 @@ module.exports = {
     },
     devServer: {
         historyApiFallback: true,
-        contentBase: path.join(__dirname, 'src'),
+        contentBase: path.join(__dirname, 'dist'),
         writeToDisk: true,
         compress: false,
         port: 9000,
