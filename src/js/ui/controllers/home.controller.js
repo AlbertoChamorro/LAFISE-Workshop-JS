@@ -1,81 +1,139 @@
 import usersServices from '../../services/users.services'
 import { paginate } from '../../utils/pagination'
+import { getRandomInt } from '../../utils/random'
 
+// Controller
 export default class HomeController {
 
     constructor($scope) {
-        this.$scope = $scope
+        // (MVVM) vm = ViewModel, es el responsable de brindarle la informacion a mostrar a la vista, y el encargado de solicitar datos a servicios.
+        this.vm = $scope
 
-        this.$scope.isLoading = false
-        this.$scope.selectAllCheckbox = true
-        this.$scope.selectUsersCheckbox = true
-        this.$scope.selectOrganizationsCheckbox = true
-        this.$scope.search = ''
-        this.$scope.count = 0
-        this.$scope.users = []
+        this.vm.isLoading = false
+        this.vm.selectAllCheckbox = true
+        this.vm.selectUsersCheckbox = true
+        this.vm.selectOrganizationsCheckbox = true
+        this.vm.search = ''
+        this.vm.count = 0
+        this.vm.users = []
 
-        this.$scope.filterAll = this.filterAll
-        this.$scope.filterUsers = this.filterUsers
-        this.$scope.filterOrganizations = this.filterOrganizations
-        this.$scope.searchUsers = this.searchUsers
+        this.vm.filterAll = this.filterAll
+        this.vm.filterUsers = this.filterUsers
+        this.vm.filterOrganizations = this.filterOrganizations
+        this.vm.searchUsers = this.searchUsers
 
-        this.$scope.data = {
+        this.vm.data = {
             pageSize: 10,
             page: 1,
-            records: []
+            records: [],
+            totalCount: 0,
+            count: 0
+        }
+
+        this.vm.pagination = {
+            _numberPages: 0,
+            _currentPage: 0,
+            _previousPage: 0,
+            _nextPage: 0,
+            _onSelectPage: this.onSelectPage 
+        }
+
+        this.vm.$watch("data", (newValue, oldValue, vm) => {
+            if (newValue != oldValue) {
+
+                vm.pagination._numberPages = Math.ceil(newValue.totalCount / newValue.pageSize)
+                vm.pagination._currentPage = this.vm.data.page     
+
+                if (vm.pagination._numberPages == 1) {
+                    vm.pagination._previousPage = 1
+                    vm.pagination._nextPage = 1
+                } else if (vm.pagination._numberPages >= vm.pagination._currentPage) {
+                    vm.pagination._previousPage = (vm.pagination._currentPage == 1) 
+                                                ? vm.pagination._currentPage
+                                                : (vm.pagination._currentPage - 1)
+                    vm.pagination._nextPage = (vm.pagination._numberPages == vm.pagination._currentPage) 
+                                                ? vm.pagination._currentPage
+                                                : (vm.pagination._currentPage + 1)
+                }
+                console.log(this.vm.pagination)
+            }
+        }, true)
+
+
+        // Good practices, alternatly to enums
+        this.vm.optionsFilters = {
+            ALL: 1,
+            USERS: 2,
+            ORGANIZATIONS: 3
+        }
+
+        this.vm.category = {
+            BEGINNER1: [0, 100],
+            BEGINNER2: [101, 385],
+            STANDARD1: [386, 550],
+            STANDARD2: [551, 749],
+            PRO: [750, 1000]
+        }
+
+        this.typeUsers = {
+            USER: "User",
+            ORGANIZATION: "Organization"
         }
     }
 
-    filterAll = () => {
-        this.$scope.selectUsersCheckbox = this.$scope.selectAllCheckbox
-        this.$scope.selectOrganizationsCheckbox = this.$scope.selectAllCheckbox
-        this.searchUsers()
+    onSelectPage = (page) => {
+        if (this.vm.data.page != page) {
+            this.vm.data.page = page
+            this.vm.data.records = paginate(this.users, this.vm.data.pageSize, this.vm.data.page)
+            console.log(this.vm.data)
+        }
     }
 
-    filterUsers = () => {
-        this.$scope.selectAllCheckbox = this.$scope.selectUsersCheckbox && this.$scope.selectOrganizationsCheckbox
-        this.searchUsers()
-    }
+    filterUsers = (option) => {
+        if (this.vm.optionsFilters.ALL == option) {
+            this.vm.selectUsersCheckbox = this.vm.selectAllCheckbox
+            this.vm.selectOrganizationsCheckbox = this.vm.selectAllCheckbox
+        } else {
+            this.vm.selectAllCheckbox = this.vm.selectUsersCheckbox && this.vm.selectOrganizationsCheckbox
+        }
 
-    filterOrganizations = () => {
-        this.$scope.selectAllCheckbox = this.$scope.selectUsersCheckbox && this.$scope.selectOrganizationsCheckbox
         this.searchUsers()
     }
 
     searchUsers = () => {
-        this.$scope.isLoading = true
-        usersServices.getUsers(this.$scope.search)
+        this.vm.isLoading = true
+        usersServices.getUsers(this.vm.search)
             .then(response => {
                 this.applyTransformations(response)
             }).catch(error => {
                 console.log(error)
-                this.$scope.isLoading = false
-                this.$scope.$apply()
+                this.vm.isLoading = false
+                this.vm.$apply()
             })
     }
 
-    applyTransformations = (data) => {
-        data = this.$scope.search.trim() ? data.items : data
-        this.$scope.data.records = data.filter(user => {
-            if (!this.$scope.selectAllCheckbox && this.$scope.selectOrganizationsCheckbox){
-                return user.type == "Organization"
-            }
+    applyTransformations = (response) => {
+        response = this.vm.search.trim() ? response.items : response
+        this.users = response.filter(user => {
 
-            if (!this.$scope.selectAllCheckbox && this.$scope.selectUsersCheckbox) {
-                return user.type == "User"
-            }
+            if (!this.vm.selectAllCheckbox && this.vm.selectUsersCheckbox) 
+                return user.type == this.typeUsers.USER
+
+            if (!this.vm.selectAllCheckbox && this.vm.selectOrganizationsCheckbox) 
+                return user.type == this.typeUsers.ORGANIZATION
 
             return user
         }).map(user => {
-            user.profile_url = "https://rrbus.com/img/app/background/user-center/bg1.png"
+            user.followers = getRandomInt(0, 1000)
             return user
         })
 
-        this.$scope.count = this.$scope.data.records.length
-        //this.$scope.data.records = paginate(data, this.$scope.data.pageSize, this.$scope.data.page)
-        console.log(this.$scope.data)
-        this.$scope.isLoading = false
-        this.$scope.$apply()
+        this.vm.data.records = paginate(this.users, this.vm.data.pageSize, this.vm.data.page)
+        this.vm.data.totalCount = response.length
+        this.vm.data.count = this.vm.data.records.length
+        console.log(this.vm.data)
+        this.vm.isLoading = false
+        this.vm.$apply()
     }
 
     $onInit() {
