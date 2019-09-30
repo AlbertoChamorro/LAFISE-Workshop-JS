@@ -10,7 +10,7 @@
 <body ng-controller="HomeController">
 
     <!-- Wrapper container -->
-    <div class="container">
+    <div class="container-fluid">
 
         <div class="wrapper-header row">
             <h1 class="col-md-12 mt-4 text-center">Portafolios GitHub</h1>
@@ -28,7 +28,7 @@
 
             <!-- Counts footer descriptions -->
             <div class="col-md-10 mx-auto mt-1 mb-2">
-                <label class="control-label float-right small">Se encontraron {{count}} portafolios</label>
+                <label class="control-label float-right small">{{ data.count }}/{{data.totalCount}} portafolios</label>
             </div>
 
             <!-- Filters -->
@@ -65,9 +65,9 @@
             </div>
         </div>
         
-        <div class="row mt-4 mx-auto" ng-if="!isLoading">
-            <div id="{{ user.id }}" class="col-md-4" ng-repeat="user in data.records">
-                <div class="card" style="width: 18rem;">
+        <div class="row mt-5 mx-auto" ng-if="!isLoading">
+            <div id="{{ user.id }}" class="col-md-3" ng-repeat="user in data.records">
+                <div class="card" style="width: 18em;">
                     <img ng-src="{{ user.avatar_url }}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">{{ user.login }}</h5>
@@ -80,6 +80,18 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="row mt-5 mx-auto text-center" ng-if="!isLoading && data.records.length == 0">
+            <label class="col-md-12 lead" style="font-size: 64px">
+                <span class="col-md-12 primary-text">😟</span>
+            </label>
+
+            <span class="col-md-12 primary-text">No se encontraron coincidencias de `<em class="lead">{{search}}</em>`<span>
+
+            <!-- <p class="col-md-12 lead" style="font-size: 20px">
+                <span class="col-md-12"><i class="fa primary-text fa-folder-open fa-5x"></i></span>
+            </p> -->
         </div>
 
         <!-- Pagination components -->

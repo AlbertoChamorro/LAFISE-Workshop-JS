@@ -14,12 +14,9 @@ export default class HomeController {
         this.vm.selectUsersCheckbox = true
         this.vm.selectOrganizationsCheckbox = true
         this.vm.search = ''
-        this.vm.count = 0
         this.vm.users = []
 
-        this.vm.filterAll = this.filterAll
         this.vm.filterUsers = this.filterUsers
-        this.vm.filterOrganizations = this.filterOrganizations
         this.vm.searchUsers = this.searchUsers
 
         this.vm.data = {
