@@ -67,14 +67,6 @@ export default class HomeController {
             ORGANIZATIONS: 3
         }
 
-        this.vm.category = {
-            BEGINNER1: [0, 100],
-            BEGINNER2: [101, 385],
-            STANDARD1: [386, 550],
-            STANDARD2: [551, 749],
-            PRO: [750, 1000]
-        }
-
         this.typeUsers = {
             USER: "User",
             ORGANIZATION: "Organization"

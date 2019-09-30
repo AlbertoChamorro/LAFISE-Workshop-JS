@@ -1,4 +1,5 @@
 //  import template from './test.directive.html';
+import category from '../category'
 
 export default class ScoreStarDirective {
 
@@ -31,6 +32,7 @@ export default class ScoreStarDirective {
         console.log(scope)
         console.log(element)
         console.log(attrs)
+        console.log(category)
         element.parent().append(scoreTmpl)
     }
 }
