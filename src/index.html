@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="GithubApp" ng-cloack>
+<html lang="en" ng-app="GithubApp" ng-cloak>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,14 +15,17 @@
         <div class="wrapper-header row">
             <h1 class="col-md-12 mt-4 text-center">Portafolios GitHub</h1>
 
-            <!-- Search to users, TODO: Bind event search -->
             <div class="col-md-10 mt-3 mx-auto">
                 <div class="inner-addon left-addon">
                     <i class="fa fa-search"></i>
                     <input class="form-control" type="search" placeholder="Búsca los mejores proyectos aquí..." 
-                        ng-model="search" />
+                        ng-model="search"
+                        ng-model-options="{ debounce: 500 }"
+                        ng-change="filterUsers()"
+                        />
                 </div>
             </div>
+
             <!-- Counts footer descriptions -->
             <div class="col-md-10 mx-auto mt-1 mb-2">
                 <label class="control-label float-right small">Se encontraron {{count}} portafolios</label>
@@ -38,7 +41,7 @@
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" id="all-checkbox" 
                             ng-model="selectAllCheckbox"
-                            ng-change="filterUsers()">
+                            ng-change="filterAll()">
                         <label class="form-check-label small" for="all-checkbox">Todos</label>
                     </div>
                     <div class="form-check form-check-inline">
@@ -49,29 +52,26 @@
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" id="org-checkbox" ng-model="selectOrganizationsCheckbox"
-                        ng-change="filterUsers()">
+                        ng-change="filterOrganizations()">
                         <label class="form-check-label small" for="org-checkbox">Organizaciones</label>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- TODO: show users, bind for each -->
-        <div class="row mt-4 mx-auto" style="visibility: hidden;">
+        <div class="row mt-4 mx-auto" ng-if="isLoading">
             <div class="spinner-border mx-auto" role="status">
                 <span class="sr-only text-secondary">Loading...</span>
             </div>
         </div>
         
-        <div class="row mt-4 mx-auto">
-            <div class="col-md-4">
+        <div class="row mt-4 mx-auto" ng-if="!isLoading">
+            <div class="col-md-4" ng-repeat="user in data.records">
                 <div class="card" style="width: 18rem;">
-                    <img src="./assets/placeholder.png" class="card-img-top" alt="...">
+                    <img ng-src="{{ user.avatar_url }}" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">Username</h5>
-                        <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                            industry's standard
-                            dummy text ever since the 1500s.</p>
+                        <h5 class="card-title">{{ user.login }}</h5>
+                        <p class="card-text">{{ user.avatar_url }}</p>
 
                         <p class="card-text">
                             <small class="text-muted">
@@ -87,96 +87,6 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card" style="width: 18rem;">
-                    <img src="./assets/placeholder.png" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Username</h5>
-                        <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                            industry's standard
-                            dummy text ever since the 1500s.</p>
-                            <p class="card-text">
-                                <small class="text-muted">
-                                    Score
-                                    <em><i class="fa fa-star score-start"></i></em>
-                                    <em><i class="fa fa-star score-start"></i></em>
-                                    <em><i class="fa fa-star score-start"></i></em>
-                                    <em><i class="fa fa-star"></i></em>
-                                    <em><i class="fa fa-star"></i></em>
-                                </small>
-                            </p>
-                        <a href="#" class="btn btn-cs-primary">Show portafolio <i class="fa fa-chevron-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card" style="width: 18rem;">
-                    <img src="./assets/placeholder.png" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Username</h5>
-                        <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                            industry's standard
-                            dummy text ever since the 1500s.</p>
-                            <p class="card-text">
-                                <small class="text-muted">
-                                    Score
-                                    <em><i class="fa fa-star"></i></em>
-                                    <em><i class="fa fa-star"></i></em>
-                                    <em><i class="fa fa-star"></i></em>
-                                    <em><i class="fa fa-star"></i></em>
-                                    <em><i class="fa fa-star"></i></em>
-                                </small>
-                            </p>
-                        <a href="#" class="btn btn-cs-primary">Show portafolio <i class="fa fa-chevron-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-md-4">
-                <div class="card" style="width: 18rem;">
-                    <img src="./assets/placeholder.png" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Username</h5>
-                        <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                            industry's standard
-                            dummy text ever since the 1500s.</p>
-                            <p class="card-text">
-                                <small class="text-muted">
-                                    Score
-                                    <em><i class="fa fa-star score-start"></i></em>
-                                    <em><i class="fa fa-star score-start"></i></em>
-                                    <em><i class="fa fa-star score-start"></i></em>
-                                    <em><i class="fa fa-star score-start"></i></em>
-                                    <em><i class="fa fa-star score-start"></i></em>
-                                </small>
-                            </p>
-                        <a href="#" class="btn btn-cs-primary">Show portafolio <i class="fa fa-chevron-right"></i></a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card" style="width: 18rem;">
-                    <img src="./assets/placeholder.png" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Username</h5>
-                        <p class="card-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard
-                        dummy text ever since the 1500s.</p>
-                        <p class="card-text">
-                            <small class="text-muted">
-                                Score
-                                <em><i class="fa fa-star score-start"></i></em>
-                                <em><i class="fa fa-star score-start"></i></em>
-                                <em><i class="fa fa-star score-start"></i></em>
-                                <em><i class="fa fa-star score-start"></i></em>
-                                <em><i class="fa fa-star score-start"></i></em>
-                            </small>
-                        </p>
-                        <a href="#" class="btn btn-cs-primary">Show portafolio <i class="fa fa-chevron-right"></i></a>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
         <!-- Pagination components -->

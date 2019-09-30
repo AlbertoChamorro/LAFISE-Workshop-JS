@@ -16,7 +16,7 @@ module.exports = {
         contentBase: path.join(__dirname, 'dist'),
         writeToDisk: true,
         compress: false,
-        port: 9000,
+        port: 3000,
         publicPath: '/dist/'
     },
     module: {
