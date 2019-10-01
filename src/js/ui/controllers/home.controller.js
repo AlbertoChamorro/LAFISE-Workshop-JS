@@ -32,7 +32,7 @@ export default class HomeController {
             _currentPage: 0,
             _previousPage: 0,
             _nextPage: 0,
-            _onSelectPage: this.onSelectPage 
+            _onSelectPage: this.onSelectPage
         }
 
         this.vm.$watch("data", (newValue, oldValue, vm) => {
@@ -52,7 +52,7 @@ export default class HomeController {
                                                 ? vm.pagination._currentPage
                                                 : (vm.pagination._currentPage + 1)
                 }
-                console.log(this.vm.pagination)
+                // console.log(this.vm.pagination)
             }
         }, true)
 
@@ -74,7 +74,7 @@ export default class HomeController {
         if (this.vm.data.page != page) {
             this.vm.data.page = page
             this.vm.data.records = paginate(this.users, this.vm.data.pageSize, this.vm.data.page)
-            console.log(this.vm.data)
+            // console.log(this.vm.data)
         }
     }
 
@@ -120,7 +120,7 @@ export default class HomeController {
         this.vm.data.records = paginate(this.users, this.vm.data.pageSize, this.vm.data.page)
         this.vm.data.totalCount = response.length
         this.vm.data.count = this.vm.data.records.length
-        console.log(this.vm.data)
+        // console.log(this.vm.data)
         this.vm.isLoading = false
         this.vm.$apply()
     }
@@ -130,4 +130,4 @@ export default class HomeController {
     }
 }
 
-HomeController.$inject = ['$scope'];
+HomeController.$inject = ['$scope']

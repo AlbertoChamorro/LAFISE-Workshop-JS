@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Github portafolio</title>
-    <link rel="stylesheet" type="text/css" href="../dist/main.css">
 </head>
 <body ng-controller="HomeController">
 
@@ -28,6 +27,7 @@
 
             <!-- Counts footer descriptions -->
             <div class="col-md-10 mx-auto mt-1 mb-2">
+                <!-- TODO: Mejorar filters description -->
                 <label class="control-label float-right small">{{ data.count }}/{{data.totalCount}} portafolios</label>
             </div>
 
@@ -59,22 +59,30 @@
             </div>
         </div>
 
+        <!-- Loading Template -->
         <div class="row mt-4 mx-auto" ng-if="isLoading">
             <div class="spinner-border mx-auto" role="status">
                 <span class="sr-only text-secondary">Loading...</span>
             </div>
         </div>
         
+        <!-- Records Card User -->
         <div class="row mt-5 mx-auto" ng-if="!isLoading">
             <div id="{{ user.id }}" class="col-md-3" ng-repeat="user in data.records">
                 <div class="card" style="width: 18em;">
                     <img ng-src="{{ user.avatar_url }}" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">{{ user.login }}</h5>
-                        <p class="card-text">{{ user.avatar_url }}</p>
+                        <!-- TODO: Added Filters -->
+                        <h5 class="card-title text-muted">{{ user.login }}</h5>
+
+                        <p class="card-text mb-4 mt-3">
+                            <!-- TODO: Added Filters -->
+                            <cite class="">{{ user.followers }}</cite>
+                        </p> 
 
                         <p class="card-text">
-                            <score-star value="{{user.followers}}"></score-star>
+                            <!--  value="{{user.followers}}" -->
+                            <score-star></score-star>
                         </p>
                         <a href="#" class="btn btn-cs-primary">Show portafolio <i class="fa fa-chevron-right"></i></a>
                     </div>
@@ -82,6 +90,7 @@
             </div>
         </div>
 
+        <!-- Empty Data Template -->
         <div class="row mt-5 mx-auto text-center" ng-if="!isLoading && data.records.length == 0">
             <label class="col-md-12 lead" style="font-size: 64px">
                 <span class="col-md-12 primary-text">😟</span>
@@ -95,6 +104,7 @@
         </div>
 
         <!-- Pagination components -->
+        <!-- TODO: Mejorar el tema -->
         <div class="row col-md-12 mt-4" ng-if="data.records.length > 0">
             <ul class="pagination pagination-centered pg-blue">
                 <!-- mx-auto -->
@@ -129,7 +139,5 @@
             </ul>
         </div>
     </div>
-        
-    <!-- <script type="text/javascript" src="../dist/main.bundle.js"></script> -->
 </body>
 </html>
