@@ -1,7 +1,6 @@
 // Prototypes
 import "../js/utils/objectHelper"
-
-// TODO: added "".toInt()
+import "../js/utils/stringHelper"
 
 // styles
 import "../styles/main.css"
@@ -14,6 +13,6 @@ import CapitalizeFilter from "./ui/filters/capitalize.filter"
 
 angular.module("GithubApp", [])
         .controller("HomeController", HomeController)
-        .directive("scoreStar", () => new ScoreStarDirective)
+        .directive("scoreStars", () => new ScoreStarDirective)
         .filter("scoreStar", ScoreStarFilter)
         .filter("capitalize", CapitalizeFilter)

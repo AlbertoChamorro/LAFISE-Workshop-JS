@@ -15,7 +15,7 @@ export default function ScoreStarFilter() {
                 case input < category.PRO.range[1]:
                     return category.PRO.name
                 default:
-                        return ""
+                        return "-"
         }
     }
 }

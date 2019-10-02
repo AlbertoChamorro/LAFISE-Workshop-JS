@@ -72,17 +72,14 @@
                 <div class="card" style="width: 18em;">
                     <img ng-src="{{ user.avatar_url }}" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <!-- TODO: Added Filters -->
-                        <h5 class="card-title text-muted">{{ user.login }}</h5>
+                        <h5 class="card-title text-muted">{{ user.login | capitalize }}</h5>
 
                         <p class="card-text mb-4 mt-3">
-                            <!-- TODO: Added Filters -->
-                            <cite class="">{{ user.followers }}</cite>
+                            <cite class="">{{ user.followers | scoreStar }}</cite>
                         </p> 
 
                         <p class="card-text">
-                            <!--  value="{{user.followers}}" -->
-                            <score-star></score-star>
+                            <score-stars value="{{user.followers}}"></score-stars>
                         </p>
                         <a href="#" class="btn btn-cs-primary">Show portafolio <i class="fa fa-chevron-right"></i></a>
                     </div>
@@ -116,7 +113,7 @@
                     }">
                     <a class="page-link"
                         ng-click="pagination._onSelectPage(pagination._previousPage)"
-                    >Previous</a>
+                    >Anterior</a>
                 </li>
                 <li class="page-item"
                     ng-class="{ 'active': pagination._currentPage == number }" 
@@ -134,7 +131,7 @@
                     >
                     <a class="page-link"
                         ng-click="pagination._onSelectPage(pagination._nextPage)"
-                    >Next</a>
+                    >Siguiente</a>
                 </li>
             </ul>
         </div>

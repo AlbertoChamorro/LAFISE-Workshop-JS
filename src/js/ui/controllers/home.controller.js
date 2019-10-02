@@ -52,7 +52,6 @@ export default class HomeController {
                                                 ? vm.pagination._currentPage
                                                 : (vm.pagination._currentPage + 1)
                 }
-                // console.log(this.vm.pagination)
             }
         }, true)
 
@@ -74,7 +73,6 @@ export default class HomeController {
         if (this.vm.data.page != page) {
             this.vm.data.page = page
             this.vm.data.records = paginate(this.users, this.vm.data.pageSize, this.vm.data.page)
-            // console.log(this.vm.data)
         }
     }
 
@@ -120,7 +118,6 @@ export default class HomeController {
         this.vm.data.records = paginate(this.users, this.vm.data.pageSize, this.vm.data.page)
         this.vm.data.totalCount = response.length
         this.vm.data.count = this.vm.data.records.length
-        // console.log(this.vm.data)
         this.vm.isLoading = false
         this.vm.$apply()
     }
