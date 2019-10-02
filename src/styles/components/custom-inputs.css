@@ -18,3 +18,12 @@
 /* add padding  */
 .left-addon input  { padding-left:  30px; }
 .right-addon input { padding-right: 30px; }
+
+
+.clickeable-pointer{
+  cursor: pointer;
+}
+
+.disabled-pointer{
+  cursor: not-allowed;
+}

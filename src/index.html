@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Github portafolio</title>
-    <link rel="stylesheet" type="text/css" href="../dist/main.css">
 </head>
 <body ng-controller="HomeController">
 
     <!-- Wrapper container -->
-    <div class="container">
+    <div class="container-fluid">
 
         <div class="wrapper-header row">
             <h1 class="col-md-12 mt-4 text-center">Portafolios GitHub</h1>
@@ -28,7 +27,8 @@
 
             <!-- Counts footer descriptions -->
             <div class="col-md-10 mx-auto mt-1 mb-2">
-                <label class="control-label float-right small">Se encontraron {{count}} portafolios</label>
+                <!-- TODO: Mejorar filters description -->
+                <label class="control-label float-right small">{{ data.count }}/{{data.totalCount}} portafolios</label>
             </div>
 
             <!-- Filters -->
@@ -41,47 +41,45 @@
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" id="all-checkbox" 
                             ng-model="selectAllCheckbox"
-                            ng-change="filterAll()">
+                            ng-change="filterUsers(optionsFilters.ALL)">
                         <label class="form-check-label small" for="all-checkbox">Todos</label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" id="user-checkbox" 
                             ng-model="selectUsersCheckbox"
-                            ng-change="filterUsers()">
+                            ng-change="filterUsers(optionsFilters.USERS)">
                         <label class="form-check-label small" for="user-checkbox">Usuarios</label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" id="org-checkbox" ng-model="selectOrganizationsCheckbox"
-                        ng-change="filterOrganizations()">
+                        ng-change="filterUsers(optionsFilters.ORGANIZATIONS)">
                         <label class="form-check-label small" for="org-checkbox">Organizaciones</label>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Loading Template -->
         <div class="row mt-4 mx-auto" ng-if="isLoading">
             <div class="spinner-border mx-auto" role="status">
                 <span class="sr-only text-secondary">Loading...</span>
             </div>
         </div>
         
-        <div class="row mt-4 mx-auto" ng-if="!isLoading">
-            <div class="col-md-4" ng-repeat="user in data.records">
-                <div class="card" style="width: 18rem;">
+        <!-- Records Card User -->
+        <div class="row mt-5 mx-auto" ng-if="!isLoading">
+            <div id="{{ user.id }}" class="col-md-3" ng-repeat="user in data.records">
+                <div class="card" style="width: 18em;">
                     <img ng-src="{{ user.avatar_url }}" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">{{ user.login }}</h5>
-                        <p class="card-text">{{ user.avatar_url }}</p>
+                        <h5 class="card-title text-muted">{{ user.login | capitalize }}</h5>
+
+                        <p class="card-text mb-4 mt-3">
+                            <cite class="">{{ user.followers | scoreStar }}</cite>
+                        </p> 
 
                         <p class="card-text">
-                            <small class="text-muted">
-                                Score
-                                <em><i class="fa fa-star score-start"></i></em>
-                                <em><i class="fa fa-star"></i></em>
-                                <em><i class="fa fa-star"></i></em>
-                                <em><i class="fa fa-star"></i></em>
-                                <em><i class="fa fa-star"></i></em>
-                            </small>
+                            <score-stars value="{{user.followers}}"></score-stars>
                         </p>
                         <a href="#" class="btn btn-cs-primary">Show portafolio <i class="fa fa-chevron-right"></i></a>
                     </div>
@@ -89,21 +87,54 @@
             </div>
         </div>
 
+        <!-- Empty Data Template -->
+        <div class="row mt-5 mx-auto text-center" ng-if="!isLoading && data.records.length == 0">
+            <label class="col-md-12 lead" style="font-size: 64px">
+                <span class="col-md-12 primary-text">😟</span>
+            </label>
+
+            <span class="col-md-12 primary-text">No se encontraron coincidencias de `<em class="lead">{{search}}</em>`<span>
+
+            <!-- <p class="col-md-12 lead" style="font-size: 20px">
+                <span class="col-md-12"><i class="fa primary-text fa-folder-open fa-5x"></i></span>
+            </p> -->
+        </div>
+
         <!-- Pagination components -->
-        <div class="row col-md-12 mt-4">
+        <!-- TODO: Mejorar el tema -->
+        <div class="row col-md-12 mt-4" ng-if="data.records.length > 0">
             <ul class="pagination pagination-centered pg-blue">
                 <!-- mx-auto -->
-                <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item active"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                <li class="page-item" 
+                    ng-class="{ 
+                        'disabled': pagination._currentPage == 1,
+                        'disabled-pointer': pagination._currentPage == 1,
+                        'clickeable-pointer': pagination._currentPage != 1
+                    }">
+                    <a class="page-link"
+                        ng-click="pagination._onSelectPage(pagination._previousPage)"
+                    >Anterior</a>
+                </li>
+                <li class="page-item"
+                    ng-class="{ 'active': pagination._currentPage == number }" 
+                    ng-repeat="number in pagination._numberPages.toArray()"
+                    ng-click="pagination._onSelectPage(number)"
+                    >
+                        <a class="page-link">{{ number }}</a>
+                </li>
+                <li class="page-item" 
+                        ng-class="{
+                            'disabled': pagination._currentPage == pagination._nextPage,
+                            'disabled-pointer': pagination._currentPage == pagination._nextPage,
+                            'clickeable-pointer': pagination._currentPage != pagination._nextPage
+                        }"
+                    >
+                    <a class="page-link"
+                        ng-click="pagination._onSelectPage(pagination._nextPage)"
+                    >Siguiente</a>
+                </li>
             </ul>
         </div>
     </div>
-        
-    <!-- <script type="text/javascript" src="../dist/main.bundle.js"></script> -->
 </body>
 </html>
